@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import apps from "./apps";
+import { RegistrableApp, LifeCycleFn, ObjectType } from "qiankun";
 
 function App() {
+  const pushTo = (app: RegistrableApp<LifeCycleFn<ObjectType>>) => {
+    window.history.pushState(app.name, app.name, String(app.activeRule));
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {apps.map((app) => (
+        <div key={app.name} onClick={() => pushTo(app)}>
+          {app.name}
+        </div>
+      ))}
     </div>
   );
 }
